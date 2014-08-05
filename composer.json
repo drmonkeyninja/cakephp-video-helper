@@ -1,0 +1,24 @@
+{
+    "name": "drmonkeyninja/cakephp-video-helper",
+    "description": "CakePHP helper for embedding YouTube and Vimeo videos",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "video", "youtube", "video"],
+    "homepage": "https://github.com/drmonkeyninja/cakephp-video-helper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Carter",
+            "role": "Author"
+        },
+        {
+            "name": "Emerson Soares",
+            "role": "Author"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "extra": {
+        "installer-name": "Video"
+    }
+}
