@@ -5,7 +5,6 @@
  * @name       Video Helper
  * @author     Andy Carter (@drmonkeyninja)
  * @author     Emerson Soares (dev.emerson@gmail.com)
- * @version    2.0.0.0
  * @license    MIT License (http://www.opensource.org/licenses/mit-license.php) 
  */
 class VideoHelper extends HtmlHelper {
@@ -16,17 +15,36 @@ class VideoHelper extends HtmlHelper {
 		'vimeo' => 'http://player.vimeo.com/video'
 	);
 
+
+/**
+ * Returns an embedded video.
+ *
+ * @param string $url video URL
+ * @param array $settings (optional) parameters for the embedded video
+ * @return string
+ */
 	public function embed($url, $settings = array()) {
 
-		if ($this->_getVideoSource($url) == 'youtube') {
-			return $this->youTubeEmbed($url, $settings);
-		} elseif ($this->_getVideoSource($url) == 'vimeo') {
-			return $this->vimeoEmbed($url, $settings);
-		} elseif ($this->_getVideoSource($url) === false) {
-			return $this->tag('notfound', __('Sorry, video does not exists'), array('type' => 'label', 'class' => 'error'));
+		switch ($this->_getVideoSource($url)) {
+			case 'youtube':
+				return $this->youTubeEmbed($url, $settings);
+			case 'vimeo':
+				return $this->vimeoEmbed($url, $settings);
+			case false:
+			default:
+				if (!empty($settings['failSilently'])) {
+					return;
+				} else {
+					return $this->tag(
+						'div', 
+						__('Sorry, video does not exists'), 
+						array('class' => 'error')
+					);
+				}
 		}
 
 	}
+
 
 	public function youTubeEmbed($url, $settings = array()) {
 
