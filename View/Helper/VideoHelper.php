@@ -5,7 +5,6 @@
  * @name       Video Helper
  * @author     Andy Carter (@drmonkeyninja)
  * @author     Emerson Soares (dev.emerson@gmail.com)
- * @version    2.0.0.0
  * @license    MIT License (http://www.opensource.org/licenses/mit-license.php) 
  */
 class VideoHelper extends HtmlHelper {
