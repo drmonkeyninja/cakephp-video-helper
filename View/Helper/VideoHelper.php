@@ -16,17 +16,32 @@ class VideoHelper extends HtmlHelper {
 		'vimeo' => 'http://player.vimeo.com/video'
 	);
 
+
+/**
+ * Returns an embedded video.
+ *
+ * @param string $url video URL
+ * @param array $settings (optional) parameters for the embedded video
+ * @return string
+ */
 	public function embed($url, $settings = array()) {
 
-		if ($this->_getVideoSource($url) == 'youtube') {
-			return $this->youTubeEmbed($url, $settings);
-		} elseif ($this->_getVideoSource($url) == 'vimeo') {
-			return $this->vimeoEmbed($url, $settings);
-		} elseif ($this->_getVideoSource($url) === false) {
-			return $this->tag('notfound', __('Sorry, video does not exists'), array('type' => 'label', 'class' => 'error'));
+		switch ($this->_getVideoSource($url)) {
+			case 'youtube':
+				return $this->youTubeEmbed($url, $settings);
+			case 'vimeo':
+				return $this->vimeoEmbed($url, $settings);
+			case false:
+			default:
+				return $this->tag(
+					'notfound', 
+					__('Sorry, video does not exists'), 
+					array('type' => 'label', 'class' => 'error')
+				);
 		}
 
 	}
+
 
 	public function youTubeEmbed($url, $settings = array()) {
 
