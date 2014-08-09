@@ -34,9 +34,9 @@ class VideoHelper extends HtmlHelper {
 			case false:
 			default:
 				return $this->tag(
-					'notfound', 
+					'div', 
 					__('Sorry, video does not exists'), 
-					array('type' => 'label', 'class' => 'error')
+					array('class' => 'error')
 				);
 		}
 
