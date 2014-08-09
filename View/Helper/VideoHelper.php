@@ -33,11 +33,15 @@ class VideoHelper extends HtmlHelper {
 				return $this->vimeoEmbed($url, $settings);
 			case false:
 			default:
-				return $this->tag(
-					'div', 
-					__('Sorry, video does not exists'), 
-					array('class' => 'error')
-				);
+				if (!empty($settings['failSilently'])) {
+					return;
+				} else {
+					return $this->tag(
+						'div', 
+						__('Sorry, video does not exists'), 
+						array('class' => 'error')
+					);
+				}
 		}
 
 	}
