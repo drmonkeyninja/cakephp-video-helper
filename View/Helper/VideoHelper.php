@@ -27,9 +27,9 @@ class VideoHelper extends HtmlHelper {
 
 		switch ($this->_getVideoSource($url)) {
 			case 'youtube':
-				return $this->youTubeEmbed($url, $settings);
+				return $this->youtube($url, $settings);
 			case 'vimeo':
-				return $this->vimeoEmbed($url, $settings);
+				return $this->vimeo($url, $settings);
 			case false:
 			default:
 				if (!empty($settings['failSilently'])) {
@@ -46,7 +46,7 @@ class VideoHelper extends HtmlHelper {
 	}
 
 
-	public function youTubeEmbed($url, $settings = array()) {
+	public function youtube($url, $settings = array()) {
 
 		$default_settings = array(
 			'hd' => true, 
@@ -69,7 +69,8 @@ class VideoHelper extends HtmlHelper {
 				) . $this->tag('/iframe');
 	}
 
-	public function vimeoEmbed($url, $settings = array()) {
+
+	public function vimeo($url, $settings = array()) {
 		$default_settings = array
 			(
 			'width' => 400,
@@ -212,7 +213,7 @@ class VideoHelper extends HtmlHelper {
  * @param array $options (optional) parameters for HtmlHelper::image()
  * @return string
  */
-	public function youTubeThumbnail($url, $size = 'thumb', $options = array()) {
+	public function youtubeThumbnail($url, $size = 'thumb', $options = array()) {
 
 		$video_id = $this->_getVideoId($url);
 

@@ -39,15 +39,15 @@ class VideoHelperTest extends CakeTestCase {
 
 		// Test embedding Youtube thumbnail.
 		$expected = '<img src="http://i.ytimg.com/vi/heNGFmEQVq0/default.jpg" alt="" />';
-		$this->assertEquals($expected, $this->Video->youTubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0'));
+		$this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0'));
 
 		// Test embedding a wide Youtube thumbnail.
 		$expected = '<img src="http://i.ytimg.com/vi/heNGFmEQVq0/mqdefault.jpg" alt="" />';
-		$this->assertEquals($expected, $this->Video->youTubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'wide'));
+		$this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'wide'));
 
 		// Test passing an unsupported thumbnail size.
 		$expected = '';
-		$this->assertEquals($expected, $this->Video->youTubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'small'));
+		$this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'small'));
 
 	}
 
