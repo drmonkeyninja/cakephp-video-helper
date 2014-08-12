@@ -1,5 +1,5 @@
-Video
-=====
+VideoEmbed
+==========
 
 This plugin provides a Video helper that generates the tags for embedding videos from Youtube and Vimeo.
 
@@ -11,11 +11,11 @@ This plugin can be installed using Composer:-
 
     composer require drmonkeyninja/cakephp-video-helper
 
-Alternatively copy the plugin to your app/Plugin directory and rename the plugin's directory 'Video'.
+Alternatively copy the plugin to your app/Plugin directory and rename the plugin's directory 'VideoEmbed'.
 
 Then add the following line to your bootstrap.php to load the plugin.
 
-    CakePlugin::load('Video');
+    CakePlugin::load('VideoEmbed');
 
 
 Usage

@@ -2,7 +2,7 @@
 App::uses('Controller', 'Controller');
 App::uses('View', 'View');
 App::uses('HtmlHelper', 'View/Helper');
-App::uses('VideoHelper', 'Video.View/Helper');
+App::uses('VideoHelper', 'VideoEmbed.View/Helper');
 
 class VideoHelperTest extends CakeTestCase {
 
