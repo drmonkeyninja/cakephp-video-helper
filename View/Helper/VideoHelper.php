@@ -32,15 +32,28 @@ class VideoHelper extends HtmlHelper {
 				return $this->vimeo($url, $settings);
 			case false:
 			default:
-				if (!empty($settings['failSilently'])) {
-					return;
-				} else {
-					return $this->tag(
-						'div', 
-						__('Sorry, video does not exists'), 
-						array('class' => 'error')
-					);
-				}
+				return $this->_notFound(!empty($settings['failSilently']));
+		}
+
+	}
+
+
+/**
+ * Handles the response when no video is found
+ *
+ * @param boolean $failSilently
+ * @return string
+ */
+	protected function _notFound($failSilently = false) {
+
+		if ($failSilently===true) {
+			return;
+		} else {
+			return $this->tag(
+				'div', 
+				__('Sorry, video does not exists'), 
+				array('class' => 'error')
+			);
 		}
 
 	}
@@ -58,6 +71,11 @@ class VideoHelper extends HtmlHelper {
 
 		$settings = array_merge($default_settings, $settings);
 		$videoId = $this->_getVideoId($url, 'youtube');
+
+		if (empty($videoId)) {
+			return $this->_notFound(!empty($settings['failSilently']));
+		}
+
 		$settings['src'] = $this->_apis['youtube'] . '/' . 'embed' . '/' . $videoId . '?hd=' . $settings['hd'];
 
 		return $this->tag('iframe', null, array(
@@ -86,8 +104,13 @@ class VideoHelper extends HtmlHelper {
 		);
 		$settings = array_merge($default_settings, $settings);
 
-		$video_id = $this->_getVideoId($url, 'vimeo');
-		$settings['src'] = $this->_apis['vimeo'] . '/' . $video_id . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
+		$videoId = $this->_getVideoId($url, 'vimeo');
+
+		if (empty($videoId)) {
+			return $this->_notFound(!empty($settings['failSilently']));
+		}
+
+		$settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
 		return $this->tag('iframe', null, array(
 					'src' => $settings['src'],
 					'width' => $settings['width'],
