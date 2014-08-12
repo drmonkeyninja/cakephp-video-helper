@@ -10,9 +10,9 @@
 class VideoHelper extends HtmlHelper {
 
 	protected $_apis = array(
-		'youtube_image' => 'http://i.ytimg.com/vi', // Location of youtube images 
-		'youtube' => 'http://www.youtube.com', // Location of youtube player 
-		'vimeo' => 'http://player.vimeo.com/video'
+		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images 
+		'youtube' => '//www.youtube.com', // Location of youtube player 
+		'vimeo' => '//player.vimeo.com/video'
 	);
 
 
