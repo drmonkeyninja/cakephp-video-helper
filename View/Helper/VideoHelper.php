@@ -57,8 +57,8 @@ class VideoHelper extends HtmlHelper {
 		);
 
 		$settings = array_merge($default_settings, $settings);
-		$video_id = $this->_getVideoId($url);
-		$settings['src'] = $this->_apis['youtube'] . '/' . 'embed' . '/' . $video_id . '?hd=' . $settings['hd'];
+		$videoId = $this->_getVideoId($url, 'youtube');
+		$settings['src'] = $this->_apis['youtube'] . '/' . 'embed' . '/' . $videoId . '?hd=' . $settings['hd'];
 
 		return $this->tag('iframe', null, array(
 					'width' => $settings['width'],
@@ -86,7 +86,7 @@ class VideoHelper extends HtmlHelper {
 		);
 		$settings = array_merge($default_settings, $settings);
 
-		$video_id = $this->_getVideoId($url);
+		$video_id = $this->_getVideoId($url, 'vimeo');
 		$settings['src'] = $this->_apis['vimeo'] . '/' . $video_id . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
 		return $this->tag('iframe', null, array(
 					'src' => $settings['src'],
@@ -99,18 +99,28 @@ class VideoHelper extends HtmlHelper {
 				)) . $this->tag('/iframe');
 	}
 
-	protected function _getVideoId($url) {
 
-		if ($this->_getVideoSource($url) == 'youtube') {
+/**
+ * Returns a Video ID
+ *
+ * @param string $url Video URL
+ * @param string $source (optional) either 'youtube' or 'vimeo'
+ * @return string
+ */
+	protected function _getVideoId($url, $source = null) {
 
-			$params = $this->_getUrlParams($url);
-			return (isset($params['v']) ? $params['v'] : $url);
+		$source = empty($source) ? $this->_getVideoSource($url) : strtolower($source);
 
-		} else if ($this->_getVideoSource($url) == 'vimeo') {
-
-			$path = parse_url($url, PHP_URL_PATH);
-			return substr($path, 1);
+		switch ($source) {
+			case 'youtube':
+				$params = $this->_getUrlParams($url);
+				return (isset($params['v']) ? $params['v'] : $url);
+			case 'vimeo':
+				$path = parse_url($url, PHP_URL_PATH);
+				return substr($path, 1);
 		}
+
+		return;
 
 	}
 
