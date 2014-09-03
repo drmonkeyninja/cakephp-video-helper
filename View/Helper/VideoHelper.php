@@ -10,9 +10,10 @@
 class VideoHelper extends HtmlHelper {
 
 	protected $_apis = array(
-		'youtube_image' => 'http://i.ytimg.com/vi', // Location of youtube images 
-		'youtube' => 'http://www.youtube.com', // Location of youtube player 
-		'vimeo' => 'http://player.vimeo.com/video'
+		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images 
+		'youtube' => '//www.youtube.com', // Location of youtube player 
+		'vimeo' => '//player.vimeo.com/video',
+		'dailymotion' => '//www.dailymotion.com'
 	);
 
 
@@ -27,28 +28,50 @@ class VideoHelper extends HtmlHelper {
 
 		switch ($this->_getVideoSource($url)) {
 			case 'youtube':
-				return $this->youTubeEmbed($url, $settings);
+				return $this->youtube($url, $settings);
 			case 'vimeo':
-				return $this->vimeoEmbed($url, $settings);
+				return $this->vimeo($url, $settings);
+			case 'dailymotion':
+				return $this->dailymotion($url, $settings);
 			case false:
 			default:
-				if (!empty($settings['failSilently'])) {
-					return;
-				} else {
-					return $this->tag(
-						'div', 
-						__('Sorry, video does not exists'), 
-						array('class' => 'error')
-					);
-				}
+				return $this->_notFound(!empty($settings['failSilently']));
 		}
 
 	}
 
 
-	public function youTubeEmbed($url, $settings = array()) {
+/**
+ * Handles the response when no video is found
+ *
+ * @param boolean $failSilently
+ * @return string
+ */
+	protected function _notFound($failSilently = false) {
 
-		$default_settings = array(
+		if ($failSilently===true) {
+			return;
+		} else {
+			return $this->tag(
+				'div', 
+				__('Sorry, video does not exists'), 
+				array('class' => 'error')
+			);
+		}
+
+	}
+
+
+/**
+ * Returns an embedded Youtube video.
+ *
+ * @param string $url
+ * @param array $settings
+ * @return string
+ */
+	public function youtube($url, $settings = array()) {
+
+		$defaultSettings = array(
 			'hd' => true, 
 			'width' => 624,
 			'height' => 369,
@@ -56,9 +79,14 @@ class VideoHelper extends HtmlHelper {
 			'frameborder' => 0
 		);
 
-		$settings = array_merge($default_settings, $settings);
-		$video_id = $this->_getVideoId($url);
-		$settings['src'] = $this->_apis['youtube'] . '/' . 'embed' . '/' . $video_id . '?hd=' . $settings['hd'];
+		$settings = array_merge($defaultSettings, $settings);
+		$videoId = $this->_getVideoId($url, 'youtube');
+
+		if (empty($videoId)) {
+			return $this->_notFound(!empty($settings['failSilently']));
+		}
+
+		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'];
 
 		return $this->tag('iframe', null, array(
 					'width' => $settings['width'],
@@ -69,8 +97,17 @@ class VideoHelper extends HtmlHelper {
 				) . $this->tag('/iframe');
 	}
 
-	public function vimeoEmbed($url, $settings = array()) {
-		$default_settings = array
+
+/**
+ * Returns an embedded Vimeo video.
+ *
+ * @param string $url
+ * @param array $settings
+ * @return string
+ */
+	public function vimeo($url, $settings = array()) {
+		
+		$defaultSettings = array
 			(
 			'width' => 400,
 			'height' => 225,
@@ -83,10 +120,15 @@ class VideoHelper extends HtmlHelper {
 			'loop' => 1,
 			'frameborder' => 0
 		);
-		$settings = array_merge($default_settings, $settings);
+		$settings = array_merge($defaultSettings, $settings);
 
-		$video_id = $this->_getVideoId($url);
-		$settings['src'] = $this->_apis['vimeo'] . '/' . $video_id . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
+		$videoId = $this->_getVideoId($url, 'vimeo');
+
+		if (empty($videoId)) {
+			return $this->_notFound(!empty($settings['failSilently']));
+		}
+
+		$settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
 		return $this->tag('iframe', null, array(
 					'src' => $settings['src'],
 					'width' => $settings['width'],
@@ -96,20 +138,70 @@ class VideoHelper extends HtmlHelper {
 					'mozallowfullscreen' => $settings['allowfullscreen'],
 					'allowFullScreen' => $settings['allowfullscreen']
 				)) . $this->tag('/iframe');
+
 	}
 
-	protected function _getVideoId($url) {
 
-		if ($this->_getVideoSource($url) == 'youtube') {
+/**
+ * Returns an embedded Dailymotion video.
+ *
+ * @param string $url
+ * @param array $settings
+ * @return string
+ */
+	public function dailymotion($url, $settings = array()) {
 
-			$params = $this->_getUrlParams($url);
-			return (isset($params['v']) ? $params['v'] : $url);
+		$defaultSettings = array(
+			'width' => 480,
+			'height' => 270,
+			'allowfullscreen' => 'true', 
+			'frameborder' => 0
+		);
 
-		} else if ($this->_getVideoSource($url) == 'vimeo') {
+		$settings = array_merge($defaultSettings, $settings);
 
-			$path = parse_url($url, PHP_URL_PATH);
-			return substr($path, 1);
+		$videoId = $this->_getVideoId($url, 'dailymotion');
+
+		if (empty($videoId)) {
+			return $this->_notFound(!empty($settings['failSilently']));
 		}
+
+		$settings['src'] = $this->_apis['dailymotion'] . '/embed/video/' . $videoId;
+
+		return $this->tag('iframe', null, array(
+					'src' => $settings['src'],
+					'width' => $settings['width'],
+					'height' => $settings['height'],
+					'frameborder' => $settings['frameborder'],
+					'allowfullscreen' => $settings['allowfullscreen'])
+				) . $this->tag('/iframe');
+
+	}
+
+
+/**
+ * Returns a Video ID
+ *
+ * @param string $url Video URL
+ * @param string $source (optional) either 'youtube' or 'vimeo'
+ * @return string
+ */
+	protected function _getVideoId($url, $source = null) {
+
+		$source = empty($source) ? $this->_getVideoSource($url) : strtolower($source);
+
+		switch ($source) {
+			case 'youtube':
+				$params = $this->_getUrlParams($url);
+				return (isset($params['v']) ? $params['v'] : $url);
+			case 'vimeo':
+				$path = parse_url($url, PHP_URL_PATH);
+				return substr($path, 1);
+			case 'dailymotion':
+				return strtok(basename($url), '_');
+		}
+
+		return;
 
 	}
 
@@ -146,6 +238,8 @@ class VideoHelper extends HtmlHelper {
 			return 'vimeo';
 		} elseif (is_int(array_search('youtube', $host))) {
 			return 'youtube';
+		} elseif (is_int(array_search('dailymotion', $host))) {
+			return 'dailymotion';
 		} else {
 			return false;
 		}
@@ -212,7 +306,7 @@ class VideoHelper extends HtmlHelper {
  * @param array $options (optional) parameters for HtmlHelper::image()
  * @return string
  */
-	public function youTubeThumbnail($url, $size = 'thumb', $options = array()) {
+	public function youtubeThumbnail($url, $size = 'thumb', $options = array()) {
 
 		$video_id = $this->_getVideoId($url);
 
