@@ -62,9 +62,16 @@ class VideoHelper extends HtmlHelper {
 	}
 
 
+/**
+ * Returns an embedded Youtube video.
+ *
+ * @param string $url
+ * @param array $settings
+ * @return string
+ */
 	public function youtube($url, $settings = array()) {
 
-		$default_settings = array(
+		$defaultSettings = array(
 			'hd' => true, 
 			'width' => 624,
 			'height' => 369,
@@ -72,14 +79,14 @@ class VideoHelper extends HtmlHelper {
 			'frameborder' => 0
 		);
 
-		$settings = array_merge($default_settings, $settings);
+		$settings = array_merge($defaultSettings, $settings);
 		$videoId = $this->_getVideoId($url, 'youtube');
 
 		if (empty($videoId)) {
 			return $this->_notFound(!empty($settings['failSilently']));
 		}
 
-		$settings['src'] = $this->_apis['youtube'] . '/' . 'embed' . '/' . $videoId . '?hd=' . $settings['hd'];
+		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'];
 
 		return $this->tag('iframe', null, array(
 					'width' => $settings['width'],
@@ -91,8 +98,16 @@ class VideoHelper extends HtmlHelper {
 	}
 
 
+/**
+ * Returns an embedded Vimeo video.
+ *
+ * @param string $url
+ * @param array $settings
+ * @return string
+ */
 	public function vimeo($url, $settings = array()) {
-		$default_settings = array
+		
+		$defaultSettings = array
 			(
 			'width' => 400,
 			'height' => 225,
@@ -105,7 +120,7 @@ class VideoHelper extends HtmlHelper {
 			'loop' => 1,
 			'frameborder' => 0
 		);
-		$settings = array_merge($default_settings, $settings);
+		$settings = array_merge($defaultSettings, $settings);
 
 		$videoId = $this->_getVideoId($url, 'vimeo');
 
@@ -123,10 +138,13 @@ class VideoHelper extends HtmlHelper {
 					'mozallowfullscreen' => $settings['allowfullscreen'],
 					'allowFullScreen' => $settings['allowfullscreen']
 				)) . $this->tag('/iframe');
+
 	}
 
 
 /**
+ * Returns an embedded Dailymotion video.
+ *
  * @param string $url
  * @param array $settings
  * @return string
