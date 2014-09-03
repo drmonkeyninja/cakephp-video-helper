@@ -32,6 +32,10 @@ class VideoHelperTest extends CakeTestCase {
 		$expected = '<iframe src="//player.vimeo.com/video/62085792?title=1&amp;amp;byline=1&amp;amp;portrait=0&amp;amp;color=00adef&amp;amp;autoplay=1&amp;amp;loop=1" width="400" height="225" frameborder="0" webkitAllowFullScreen="1" mozallowfullscreen="1" allowFullScreen="1"></iframe>';
 		$this->assertEquals($expected, $this->Video->embed('https://vimeo.com/62085792'));
 
+		// Test embedding a Vimeo video.
+		$expected = '<iframe src="//www.dailymotion.com/embed/video/x1b6849" width="480" height="270" frameborder="0" allowfullscreen="true"></iframe>';
+		$this->assertEquals($expected, $this->Video->embed('http://www.dailymotion.com/video/x1b6849_baby-panda-sneezing_animals'));
+
 	}
 
 
