@@ -12,7 +12,8 @@ class VideoHelper extends HtmlHelper {
 	protected $_apis = array(
 		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images 
 		'youtube' => '//www.youtube.com', // Location of youtube player 
-		'vimeo' => '//player.vimeo.com/video'
+		'vimeo' => '//player.vimeo.com/video',
+		'dailymotion' => '//www.dailymotion.com'
 	);
 
 
@@ -30,6 +31,8 @@ class VideoHelper extends HtmlHelper {
 				return $this->youtube($url, $settings);
 			case 'vimeo':
 				return $this->vimeo($url, $settings);
+			case 'dailymotion':
+				return $this->dailymotion($url, $settings);
 			case false:
 			default:
 				return $this->_notFound(!empty($settings['failSilently']));
@@ -124,6 +127,41 @@ class VideoHelper extends HtmlHelper {
 
 
 /**
+ * @param string $url
+ * @param array $settings
+ * @return string
+ */
+	public function dailymotion($url, $settings = array()) {
+
+		$defaultSettings = array(
+			'width' => 480,
+			'height' => 270,
+			'allowfullscreen' => 'true', 
+			'frameborder' => 0
+		);
+
+		$settings = array_merge($defaultSettings, $settings);
+
+		$videoId = $this->_getVideoId($url, 'dailymotion');
+
+		if (empty($videoId)) {
+			return $this->_notFound(!empty($settings['failSilently']));
+		}
+
+		$settings['src'] = $this->_apis['dailymotion'] . '/embed/video/' . $videoId;
+
+		return $this->tag('iframe', null, array(
+					'src' => $settings['src'],
+					'width' => $settings['width'],
+					'height' => $settings['height'],
+					'frameborder' => $settings['frameborder'],
+					'allowfullscreen' => $settings['allowfullscreen'])
+				) . $this->tag('/iframe');
+
+	}
+
+
+/**
  * Returns a Video ID
  *
  * @param string $url Video URL
@@ -141,6 +179,8 @@ class VideoHelper extends HtmlHelper {
 			case 'vimeo':
 				$path = parse_url($url, PHP_URL_PATH);
 				return substr($path, 1);
+			case 'dailymotion':
+				return strtok(basename($url), '_');
 		}
 
 		return;
@@ -180,6 +220,8 @@ class VideoHelper extends HtmlHelper {
 			return 'vimeo';
 		} elseif (is_int(array_search('youtube', $host))) {
 			return 'youtube';
+		} elseif (is_int(array_search('dailymotion', $host))) {
+			return 'dailymotion';
 		} else {
 			return false;
 		}
