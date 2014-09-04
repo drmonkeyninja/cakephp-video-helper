@@ -156,7 +156,8 @@ class VideoHelper extends HtmlHelper {
 			'width' => 480,
 			'height' => 270,
 			'allowfullscreen' => 'true', 
-			'frameborder' => 0
+			'frameborder' => 0,
+			'related' => 0
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -167,7 +168,7 @@ class VideoHelper extends HtmlHelper {
 			return $this->_notFound(!empty($settings['failSilently']));
 		}
 
-		$settings['src'] = $this->_apis['dailymotion'] . '/embed/video/' . $videoId;
+		$settings['src'] = $this->_apis['dailymotion'] . '/embed/video/' . $videoId . '?related=' . $settings['related'];
 
 		return $this->tag('iframe', null, array(
 					'src' => $settings['src'],
