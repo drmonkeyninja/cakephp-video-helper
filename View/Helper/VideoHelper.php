@@ -76,7 +76,8 @@ class VideoHelper extends HtmlHelper {
 			'width' => 624,
 			'height' => 369,
 			'allowfullscreen' => 'true', 
-			'frameborder' => 0
+			'frameborder' => 0,
+			'related' => 0
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -86,7 +87,7 @@ class VideoHelper extends HtmlHelper {
 			return $this->_notFound(!empty($settings['failSilently']));
 		}
 
-		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'];
+		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'];
 
 		return $this->tag('iframe', null, array(
 					'width' => $settings['width'],
