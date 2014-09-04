@@ -1,6 +1,6 @@
 <?php
 /**
- * CakePHP helper for embedding YouTube and Vimeo videos.
+ * CakePHP helper for embedding YouTube, Vimeo and Dailymotion videos.
  * 
  * @name       Video Helper
  * @author     Andy Carter (@drmonkeyninja)
