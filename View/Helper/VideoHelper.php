@@ -225,8 +225,8 @@ class VideoHelper extends HtmlHelper {
 
 	protected function _getVideoSource($url) {
 
-		$parsed_url = parse_url($url);
-		$host = $parsed_url['host'];
+		$parsedUrl = parse_url($url);
+		$host = $parsedUrl['host'];
 		if ($this->_isIp($host) === false) {
 			if (!empty($host)) {
 				$host = $this->_returnDomain($host);
@@ -310,7 +310,7 @@ class VideoHelper extends HtmlHelper {
  */
 	public function youtubeThumbnail($url, $size = 'thumb', $options = array()) {
 
-		$video_id = $this->_getVideoId($url);
+		$videoId = $this->_getVideoId($url);
 
 		$acceptedSizes = array(
 			'thumb' => 'default', // 120px x 90px 
@@ -326,7 +326,7 @@ class VideoHelper extends HtmlHelper {
 			return;
 		}
 
-		$imageUrl = $this->_apis['youtube_image'] . '/' . $video_id . '/' . $acceptedSizes[$size] . '.jpg';
+		$imageUrl = $this->_apis['youtube_image'] . '/' . $videoId . '/' . $acceptedSizes[$size] . '.jpg';
 		return $this->image($imageUrl, $options);
 
 	}
