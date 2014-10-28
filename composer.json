@@ -2,7 +2,14 @@
     "name": "drmonkeyninja/cakephp-video-helper",
     "description": "CakePHP helper for embedding YouTube and Vimeo videos",
     "type": "cakephp-plugin",
-    "keywords": ["cakephp", "video", "youtube", "video"],
+    "keywords": [
+        "cakephp",
+        "video",
+        "youtube",
+        "vimeo",
+        "dailymotion",
+        "wistia"
+    ],
     "homepage": "https://github.com/drmonkeyninja/cakephp-video-helper",
     "license": "MIT",
     "authors": [
