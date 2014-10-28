@@ -1,7 +1,7 @@
 VideoEmbed
 ==========
 
-This plugin provides a Video helper that generates the tags for embedding videos from Youtube, Vimeo and Dailymotion.
+This plugin provides a Video helper that generates the tags for embedding videos from Youtube, Vimeo, Dailymotion and Wistia.
 
 
 Installation
@@ -41,4 +41,4 @@ Usage
     	'frameborder' => 0
     ));
 
-Some of these settings are applicable only to Vimeo if the video is on Youtube or Dailymotion they are ignored.
+Some of these settings are applicable only to Vimeo if the video is on Youtube, Dailymotion or Wistia they are ignored.
