@@ -254,7 +254,7 @@ class VideoHelper extends HtmlHelper {
 	protected function _getUrlParams($url) {
 
 		$query = parse_url($url, PHP_URL_QUERY);
-		$queryParts = explode('&', $query);
+		$queryParts = strpos($query, '=') ? explode('&', $query) : array();
 
 		$params = array();
 
