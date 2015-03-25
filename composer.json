@@ -20,5 +20,10 @@
     },
     "extra": {
         "installer-name": "VideoEmbed"
+    },
+    "autoload": {
+        "psr-4": {
+            "VideoEmbed\\": "src"
+        }
     }
 }
