@@ -1,17 +1,19 @@
 <?php
-App::uses('Controller', 'Controller');
-App::uses('View', 'View');
-App::uses('HtmlHelper', 'View/Helper');
-App::uses('VideoHelper', 'VideoEmbed.View/Helper');
+namespace VideoEmbed\Test\TestCase\View\Helper;
 
-class VideoHelperTest extends CakeTestCase {
+use Cake\Core\App;
+use Cake\View\View;
+use Cake\View\Helper\HtmlHelper;
+use Cake\TestSuite\TestCase;
+use VideoEmbed\View\Helper\VideoHelper;
+
+class VideoHelperTest extends TestCase {
 
 	public $Video = null;
 
 	public function setUp() {
 		parent::setUp();
-		$Controller = new Controller();
-		$View = new View($Controller);
+		$View = new View();
 		$this->Video = new VideoHelper($View);
 	}
 

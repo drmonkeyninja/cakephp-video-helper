@@ -1,22 +1,25 @@
 <?php
 /**
  * CakePHP helper for embedding YouTube, Vimeo and Dailymotion videos.
- * 
+ *
  * @name       Video Helper
  * @author     Andy Carter (@drmonkeyninja)
  * @author     Emerson Soares (dev.emerson@gmail.com)
- * @license    MIT License (http://www.opensource.org/licenses/mit-license.php) 
+ * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-class VideoHelper extends HtmlHelper {
+namespace VideoEmbed\View\Helper;
+use Cake\View\Helper;
+use Cake\View\Helper\HtmlHelper;
 
+class VideoHelper extends HtmlHelper
+{
 	protected $_apis = array(
-		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images 
-		'youtube' => '//www.youtube.com', // Location of youtube player 
+		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images
+		'youtube' => '//www.youtube.com', // Location of youtube player
 		'vimeo' => '//player.vimeo.com/video',
 		'dailymotion' => '//www.dailymotion.com',
 		'wistia' => '//fast.wistia.net'
 	);
-
 
 /**
  * Returns an embedded video.
@@ -25,8 +28,8 @@ class VideoHelper extends HtmlHelper {
  * @param array $settings (optional) parameters for the embedded video
  * @return string
  */
-	public function embed($url, $settings = array()) {
-
+	public function embed($url, $settings = array())
+	{
 		switch ($this->_getVideoSource($url)) {
 			case 'youtube':
 				return $this->youtube($url, $settings);
@@ -40,7 +43,6 @@ class VideoHelper extends HtmlHelper {
 			default:
 				return $this->_notFound(!empty($settings['failSilently']));
 		}
-
 	}
 
 
@@ -50,20 +52,18 @@ class VideoHelper extends HtmlHelper {
  * @param boolean $failSilently
  * @return string
  */
-	protected function _notFound($failSilently = false) {
-
+	protected function _notFound($failSilently = false)
+	{
 		if ($failSilently===true) {
 			return;
 		} else {
 			return $this->tag(
-				'div', 
-				__('Sorry, video does not exists'), 
+				'div',
+				__('Sorry, video does not exists'),
 				array('class' => 'error')
 			);
 		}
-
 	}
-
 
 /**
  * Returns an embedded Youtube video.
@@ -72,13 +72,13 @@ class VideoHelper extends HtmlHelper {
  * @param array $settings
  * @return string
  */
-	public function youtube($url, $settings = array()) {
-
+	public function youtube($url, $settings = array())
+	{
 		$defaultSettings = array(
-			'hd' => true, 
+			'hd' => true,
 			'width' => 624,
 			'height' => 369,
-			'allowfullscreen' => 'true', 
+			'allowfullscreen' => 'true',
 			'frameborder' => 0,
 			'related' => 0
 		);
@@ -101,7 +101,6 @@ class VideoHelper extends HtmlHelper {
 				) . $this->tag('/iframe');
 	}
 
-
 /**
  * Returns an embedded Vimeo video.
  *
@@ -109,8 +108,8 @@ class VideoHelper extends HtmlHelper {
  * @param array $settings
  * @return string
  */
-	public function vimeo($url, $settings = array()) {
-		
+	public function vimeo($url, $settings = array())
+	{
 		$defaultSettings = array
 			(
 			'width' => 400,
@@ -142,9 +141,7 @@ class VideoHelper extends HtmlHelper {
 					'mozallowfullscreen' => $settings['allowfullscreen'],
 					'allowFullScreen' => $settings['allowfullscreen']
 				)) . $this->tag('/iframe');
-
 	}
-
 
 /**
  * Returns an embedded Dailymotion video.
@@ -153,12 +150,12 @@ class VideoHelper extends HtmlHelper {
  * @param array $settings
  * @return string
  */
-	public function dailymotion($url, $settings = array()) {
-
+	public function dailymotion($url, $settings = array())
+	{
 		$defaultSettings = array(
 			'width' => 480,
 			'height' => 270,
-			'allowfullscreen' => 'true', 
+			'allowfullscreen' => 'true',
 			'frameborder' => 0,
 			'related' => 0
 		);
@@ -180,9 +177,7 @@ class VideoHelper extends HtmlHelper {
 					'frameborder' => $settings['frameborder'],
 					'allowfullscreen' => $settings['allowfullscreen'])
 				) . $this->tag('/iframe');
-
 	}
-
 
 /**
  * Returns an embedded Wistia video.
@@ -191,12 +186,12 @@ class VideoHelper extends HtmlHelper {
  * @param array $settings
  * @return string
  */
-	public function wistia($url, $settings = array()) {
-
+	public function wistia($url, $settings = array())
+	{
 		$defaultSettings = array(
 			'width' => 480,
 			'height' => 270,
-			'allowfullscreen' => 'true', 
+			'allowfullscreen' => 'true',
 			'frameborder' => 0
 		);
 
@@ -217,9 +212,7 @@ class VideoHelper extends HtmlHelper {
 					'frameborder' => $settings['frameborder'],
 					'allowfullscreen' => $settings['allowfullscreen'])
 				) . $this->tag('/iframe');
-
 	}
-
 
 /**
  * Returns a Video ID
@@ -228,8 +221,8 @@ class VideoHelper extends HtmlHelper {
  * @param string $source (optional) either 'youtube' or 'vimeo'
  * @return string
  */
-	protected function _getVideoId($url, $source = null) {
-
+	protected function _getVideoId($url, $source = null)
+	{
 		$source = empty($source) ? $this->_getVideoSource($url) : strtolower($source);
 
 		switch ($source) {
@@ -248,11 +241,10 @@ class VideoHelper extends HtmlHelper {
 		}
 
 		return;
-
 	}
 
-	protected function _getUrlParams($url) {
-
+	protected function _getUrlParams($url)
+	{
 		$query = parse_url($url, PHP_URL_QUERY);
 		$queryParts = strpos($query, '=') ? explode('&', $query) : array();
 
@@ -264,11 +256,10 @@ class VideoHelper extends HtmlHelper {
 		}
 
 		return $params;
-
 	}
 
-	protected function _getVideoSource($url) {
-
+	protected function _getVideoSource($url)
+	{
 		$parsedUrl = parse_url($url);
 		$host = $parsedUrl['host'];
 		if ($this->_isIp($host) === false) {
@@ -291,29 +282,27 @@ class VideoHelper extends HtmlHelper {
 		} else {
 			return false;
 		}
-
 	}
 
-	protected function _isIp($url) {
-
-		//first of all the format of the ip address is matched 
+	protected function _isIp($url)
+	{
+		//first of all the format of the ip address is matched
 		if (preg_match("/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/", $url)) {
-			//now all the intger values are separated 
+			//now all the intger values are separated
 			$parts = explode(".", $url);
-			//now we need to check each part can range from 0-255 
+			//now we need to check each part can range from 0-255
 			foreach ($parts as $ip_parts) {
 				if (intval($ip_parts) > 255 || intval($ip_parts) < 0)
-					return false; //if number is not within range of 0-255 
+					return false; //if number is not within range of 0-255
 			}
 			return true;
 		} else {
-			return false; //if format of ip address doesn't matches 
+			return false; //if format of ip address doesn't matches
 		}
-
 	}
 
-	protected function _returnDomain($domainb) {
-
+	protected function _returnDomain($domainb)
+	{
 		$bits = explode('/', $domainb);
 		if ($bits[0] == 'http:' || $bits[0] == 'https:') {
 			$domainb = $bits[2];
@@ -332,15 +321,13 @@ class VideoHelper extends HtmlHelper {
 			$url = $bits[($idz + 1)] . '.' . $bits[($idz + 2)];
 		}
 		return $url;
-
 	}
-
 
 /**
  * Returns a Youtube video image
- * 
+ *
  * Available images:-
- * 
+ *
  * 		thumb - 120px x 90px (4:3)
  * 		large - 480px x 360px (4:3)
  * 		thumb1 - 120px x 90px (4:3) taken at 25% through the video
@@ -348,21 +335,21 @@ class VideoHelper extends HtmlHelper {
  * 		thumb3 - 120px x 90px (4:3) taken at 75% through the video
  * 		wide - 320px x 180px (16:9)
  * 		maxres - large image, not always available
- * 
+ *
  * @param string $url Youtube video URL
  * @param string $size (optional) thumbnail to be used
  * @param array $options (optional) parameters for HtmlHelper::image()
  * @return string
  */
-	public function youtubeThumbnail($url, $size = 'thumb', $options = array()) {
-
+	public function youtubeThumbnail($url, $size = 'thumb', $options = array())
+	{
 		$videoId = $this->_getVideoId($url);
 
 		$acceptedSizes = array(
-			'thumb' => 'default', // 120px x 90px 
-			'large' => 0, // 480px x 360px 
-			'thumb1' => 1, // 120px x 90px at position 25% 
-			'thumb2' => 2, // 120px x 90px at position 50% 
+			'thumb' => 'default', // 120px x 90px
+			'large' => 0, // 480px x 360px
+			'thumb1' => 1, // 120px x 90px at position 25%
+			'thumb2' => 2, // 120px x 90px at position 50%
 			'thumb3' => 3, // 120px x 90px at position 75%
 			'wide' => 'mqdefault',
 			'maxres' => 'maxresdefault'
@@ -374,7 +361,6 @@ class VideoHelper extends HtmlHelper {
 
 		$imageUrl = $this->_apis['youtube_image'] . '/' . $videoId . '/' . $acceptedSizes[$size] . '.jpg';
 		return $this->image($imageUrl, $options);
-
 	}
 
 }
