@@ -25,5 +25,11 @@
         "psr-4": {
             "VideoEmbed\\": "src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cake\\Test\\": "./vendor/drmonkeyninja/cakephp-video-helper/tests",
+            "VideoEmbed\\Test\\": "tests"
+        }
     }
 }
