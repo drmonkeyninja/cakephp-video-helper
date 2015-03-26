@@ -1,17 +1,19 @@
 <?php
-App::uses('Controller', 'Controller');
-App::uses('View', 'View');
-App::uses('HtmlHelper', 'View/Helper');
-App::uses('VideoHelper', 'VideoEmbed.View/Helper');
+namespace VideoEmbed\Test\TestCase\View\Helper;
 
-class VideoHelperTest extends CakeTestCase {
+use Cake\Core\App;
+use Cake\View\View;
+use Cake\View\Helper\HtmlHelper;
+use Cake\TestSuite\TestCase;
+use VideoEmbed\View\Helper\VideoHelper;
+
+class VideoHelperTest extends TestCase {
 
 	public $Video = null;
 
 	public function setUp() {
 		parent::setUp();
-		$Controller = new Controller();
-		$View = new View($Controller);
+		$View = new View();
 		$this->Video = new VideoHelper($View);
 	}
 
@@ -46,11 +48,11 @@ class VideoHelperTest extends CakeTestCase {
 	public function testYouTubeThumbnail() {
 
 		// Test embedding Youtube thumbnail.
-		$expected = '<img src="//i.ytimg.com/vi/heNGFmEQVq0/default.jpg" alt="" />';
+		$expected = '<img src="//i.ytimg.com/vi/heNGFmEQVq0/default.jpg" alt=""/>';
 		$this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0'));
 
 		// Test embedding a wide Youtube thumbnail.
-		$expected = '<img src="//i.ytimg.com/vi/heNGFmEQVq0/mqdefault.jpg" alt="" />';
+		$expected = '<img src="//i.ytimg.com/vi/heNGFmEQVq0/mqdefault.jpg" alt=""/>';
 		$this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'wide'));
 
 		// Test passing an unsupported thumbnail size.
