@@ -4,12 +4,21 @@ VideoEmbed
 This plugin provides a Video helper that generates the tags for embedding videos from Youtube, Vimeo, Dailymotion and Wistia.
 
 
+Requirements
+------------
+
+The `2.x` branch has the following requirements:-
+
+* CakePHP 2.
+* PHP 5.3.0 or greater.
+
+
 Installation
 ------------
 
 This plugin can be installed using Composer:-
 
-    composer require drmonkeyninja/cakephp-video-helper
+    composer require drmonkeyninja/cakephp-video-helper:2.*
 
 Alternatively copy the plugin to your app/Plugin directory and rename the plugin's directory 'VideoEmbed'.
 
@@ -26,7 +35,7 @@ Usage
         'height' => 300,
         'failSilently' => true // Disables warning text when URL is not recognised
     ));
-    
+
     // Advanced usage
     echo $this->Video->embed($video['Video']['url'], array(
         'width' => 450,
