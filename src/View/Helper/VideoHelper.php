@@ -372,7 +372,7 @@ class VideoHelper extends HtmlHelper
      * @param string $url Youtube video URL
      * @param string $size (optional) thumbnail to be used
      * @param array $options (optional) parameters for HtmlHelper::image()
-     * @return string
+     * @return string|void
      */
     public function youtubeThumbnail($url, $size = 'thumb', $options = array())
     {
