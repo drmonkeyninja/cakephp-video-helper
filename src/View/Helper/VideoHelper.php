@@ -56,7 +56,7 @@ class VideoHelper extends HtmlHelper
     protected function _notFound($failSilently = false)
     {
         if ($failSilently === true) {
-            return;
+            return '';
         } else {
             return $this->tag(
                 'div',
@@ -251,10 +251,14 @@ class VideoHelper extends HtmlHelper
                 preg_match('|^/medias/([0-9a-z]+)|i', $path, $matches);
                 return !empty($matches[1]) ? $matches[1] : null;
         }
-
-        return;
     }
 
+    /**
+     * Returns URL parameters
+     *
+     * @param  str $url URL
+     * @return array
+     */
     protected function _getUrlParams($url)
     {
         $query = parse_url($url, PHP_URL_QUERY);
@@ -270,6 +274,11 @@ class VideoHelper extends HtmlHelper
         return $params;
     }
 
+    /**
+     * Returns the video source from a URL
+     * @param  str $url URL
+     * @return str Video source
+     */
     protected function _getVideoSource($url)
     {
         $parsedUrl = parse_url($url);
@@ -296,6 +305,12 @@ class VideoHelper extends HtmlHelper
         }
     }
 
+    /**
+     * Check if IP
+     *
+     * @param  str $url URL
+     * @return bool
+     */
     protected function _isIp($url)
     {
         //first of all the format of the ip address is matched
@@ -314,6 +329,11 @@ class VideoHelper extends HtmlHelper
         }
     }
 
+    /**
+     * Returns the domain
+     * @param  str $domainb Domain
+     * @return str
+     */
     protected function _returnDomain($domainb)
     {
         $bits = explode('/', $domainb);
