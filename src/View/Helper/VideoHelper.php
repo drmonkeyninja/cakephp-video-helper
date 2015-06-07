@@ -81,7 +81,8 @@ class VideoHelper extends HtmlHelper
             'height' => 369,
             'allowfullscreen' => 'true',
             'frameborder' => 0,
-            'related' => 0
+            'related' => 0,
+            'autoplay' => false
         );
 
         $settings = array_merge($defaultSettings, $settings);
@@ -91,7 +92,7 @@ class VideoHelper extends HtmlHelper
             return $this->_notFound(!empty($settings['failSilently']));
         }
 
-        $settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'];
+        $settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'] . '&autoplay=' . $settings['autoplay'];
 
         return $this->tag(
             'iframe',
@@ -101,7 +102,8 @@ class VideoHelper extends HtmlHelper
                 'height' => $settings['height'],
                 'src' => $settings['src'],
                 'frameborder' => $settings['frameborder'],
-                'allowfullscreen' => $settings['allowfullscreen']
+                'allowfullscreen' => $settings['allowfullscreen'],
+                'autoplay' => $settings['autoplay']
             )
         ) . $this->tag('/iframe');
     }
