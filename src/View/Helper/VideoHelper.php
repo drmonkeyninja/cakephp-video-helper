@@ -76,13 +76,13 @@ class VideoHelper extends HtmlHelper
     public function youtube($url, $settings = array())
     {
         $defaultSettings = array(
-            'hd' => true,
+            'hd' => 1,
             'width' => 624,
             'height' => 369,
-            'allowfullscreen' => 'true',
+            'allowfullscreen' => 1,
             'frameborder' => 0,
             'related' => 0,
-            'autoplay' => false
+            'autoplay' => 0
         );
 
         $settings = array_merge($defaultSettings, $settings);
@@ -145,7 +145,7 @@ class VideoHelper extends HtmlHelper
                     'frameborder' => $settings['frameborder'],
                     'webkitAllowFullScreen' => $settings['allowfullscreen'],
                     'mozallowfullscreen' => $settings['allowfullscreen'],
-                    'allowFullScreen' => $settings['allowfullscreen']
+                    'allowfullscreen' => $settings['allowfullscreen']
                 )) . $this->tag('/iframe');
     }
 
