@@ -76,13 +76,13 @@ class VideoHelper extends HtmlHelper
     public function youtube($url, $settings = array())
     {
         $defaultSettings = array(
-            'hd' => 1,
+            'hd' => true,
             'width' => 624,
             'height' => 369,
-            'allowfullscreen' => 1,
+            'allowfullscreen' => true,
             'frameborder' => 0,
-            'related' => 0,
-            'autoplay' => 0
+            'related' => false,
+            'autoplay' => false
         );
 
         $settings = array_merge($defaultSettings, $settings);
@@ -92,7 +92,7 @@ class VideoHelper extends HtmlHelper
             return $this->_notFound(!empty($settings['failSilently']));
         }
 
-        $settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'] . '&autoplay=' . $settings['autoplay'];
+        $settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . (int)$settings['hd'] . '&rel=' . (int)$settings['related'] . '&autoplay=' . (int)$settings['autoplay'];
 
         return $this->tag(
             'iframe',
@@ -101,9 +101,9 @@ class VideoHelper extends HtmlHelper
                 'width' => $settings['width'],
                 'height' => $settings['height'],
                 'src' => $settings['src'],
-                'frameborder' => $settings['frameborder'],
+                'frameborder' => (int)$settings['frameborder'],
                 'allowfullscreen' => $settings['allowfullscreen'],
-                'autoplay' => $settings['autoplay']
+                'autoplay' => (int)$settings['autoplay']
             )
         ) . $this->tag('/iframe');
     }
@@ -120,13 +120,13 @@ class VideoHelper extends HtmlHelper
         $defaultSettings = array (
             'width' => 400,
             'height' => 225,
-            'show_title' => 1,
-            'show_byline' => 1,
-            'show_portrait' => 0,
+            'show_title' => true,
+            'show_byline' => true,
+            'show_portrait' => false,
             'color' => '00adef',
-            'allowfullscreen' => 1,
-            'autoplay' => 1,
-            'loop' => 1,
+            'allowfullscreen' => true,
+            'autoplay' => true,
+            'loop' => true,
             'frameborder' => 0
         );
         $settings = array_merge($defaultSettings, $settings);
@@ -137,14 +137,14 @@ class VideoHelper extends HtmlHelper
             return $this->_notFound(!empty($settings['failSilently']));
         }
 
-        $settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
+        $settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . (int)$settings['show_title'] . '&amp;byline=' . (int)$settings['show_byline'] . '&amp;portrait=' . (int)$settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . (int)$settings['autoplay'] . '&amp;loop=' . (int)$settings['loop'];
         return $this->tag('iframe', null, array(
                     'src' => $settings['src'],
                     'width' => $settings['width'],
                     'height' => $settings['height'],
-                    'frameborder' => $settings['frameborder'],
-                    'webkitAllowFullScreen' => $settings['allowfullscreen'],
-                    'mozallowfullscreen' => $settings['allowfullscreen'],
+                    'frameborder' => (int)$settings['frameborder'],
+                    'webkitAllowFullScreen' => (int)$settings['allowfullscreen'],
+                    'mozallowfullscreen' => (int)$settings['allowfullscreen'],
                     'allowfullscreen' => $settings['allowfullscreen']
                 )) . $this->tag('/iframe');
     }
@@ -161,9 +161,9 @@ class VideoHelper extends HtmlHelper
         $defaultSettings = array(
             'width' => 480,
             'height' => 270,
-            'allowfullscreen' => 'true',
+            'allowfullscreen' => true,
             'frameborder' => 0,
-            'related' => 0
+            'related' => false
         );
 
         $settings = array_merge($defaultSettings, $settings);
@@ -174,7 +174,7 @@ class VideoHelper extends HtmlHelper
             return $this->_notFound(!empty($settings['failSilently']));
         }
 
-        $settings['src'] = $this->_apis['dailymotion'] . '/embed/video/' . $videoId . '?related=' . $settings['related'];
+        $settings['src'] = $this->_apis['dailymotion'] . '/embed/video/' . $videoId . '?related=' . (int)$settings['related'];
 
         return $this->tag(
             'iframe',
@@ -201,7 +201,7 @@ class VideoHelper extends HtmlHelper
         $defaultSettings = array(
             'width' => 480,
             'height' => 270,
-            'allowfullscreen' => 'true',
+            'allowfullscreen' => true,
             'frameborder' => 0
         );
 
