@@ -29,19 +29,19 @@ class VideoHelperTest extends TestCase
         $this->assertEquals($expected, $this->Video->embed('http://example.com', array('failSilently' => true)));
 
         // Test embedding a Youtube video.
-        $expected = '<iframe width="624" height="369" src="//www.youtube.com/embed/heNGFmEQVq0?hd=1&amp;rel=0" frameborder="0" allowfullscreen="true"></iframe>';
+        $expected = '<iframe width="624" height="369" src="//www.youtube.com/embed/heNGFmEQVq0?hd=1&amp;rel=0&amp;autoplay=0" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
         $this->assertEquals($expected, $this->Video->embed('https://www.youtube.com/watch?v=heNGFmEQVq0'));
 
         // Test embedding a Vimeo video.
-        $expected = '<iframe src="//player.vimeo.com/video/62085792?title=1&amp;amp;byline=1&amp;amp;portrait=0&amp;amp;color=00adef&amp;amp;autoplay=1&amp;amp;loop=1" width="400" height="225" frameborder="0" webkitAllowFullScreen="1" mozallowfullscreen="1" allowFullScreen="1"></iframe>';
+        $expected = '<iframe src="//player.vimeo.com/video/62085792?title=1&amp;byline=1&amp;portrait=0&amp;color=00adef&amp;autoplay=1&amp;loop=1" width="400" height="225" frameborder="0" webkitAllowFullScreen="1" mozallowfullscreen="1" allowfullscreen="allowfullscreen"></iframe>';
         $this->assertEquals($expected, $this->Video->embed('https://vimeo.com/62085792'));
 
-        // Test embedding a Vimeo video.
-        $expected = '<iframe src="//www.dailymotion.com/embed/video/x1b6849?related=0" width="480" height="270" frameborder="0" allowfullscreen="true"></iframe>';
+        // Test embedding a Dailymotion video.
+        $expected = '<iframe src="//www.dailymotion.com/embed/video/x1b6849?related=0" width="480" height="270" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
         $this->assertEquals($expected, $this->Video->embed('http://www.dailymotion.com/video/x1b6849_baby-panda-sneezing_animals'));
 
         // Test embedding a Wistia video.
-        $expected = '<iframe src="//fast.wistia.net/embed/iframe/1voyrefhy9" width="480" height="270" frameborder="0" allowfullscreen="true"></iframe>';
+        $expected = '<iframe src="//fast.wistia.net/embed/iframe/1voyrefhy9" width="480" height="270" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
         $this->assertEquals($expected, $this->Video->embed('https://numed.wistia.com/medias/1voyrefhy9'));
     }
 
