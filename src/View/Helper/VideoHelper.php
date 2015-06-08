@@ -137,7 +137,7 @@ class VideoHelper extends HtmlHelper
             return $this->_notFound(!empty($settings['failSilently']));
         }
 
-        $settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . (int)$settings['show_title'] . '&amp;byline=' . (int)$settings['show_byline'] . '&amp;portrait=' . (int)$settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . (int)$settings['autoplay'] . '&amp;loop=' . (int)$settings['loop'];
+        $settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . (int)$settings['show_title'] . '&byline=' . (int)$settings['show_byline'] . '&portrait=' . (int)$settings['show_portrait'] . '&color=' . $settings['color'] . '&autoplay=' . (int)$settings['autoplay'] . '&loop=' . (int)$settings['loop'];
         return $this->tag('iframe', null, array(
                     'src' => $settings['src'],
                     'width' => $settings['width'],
