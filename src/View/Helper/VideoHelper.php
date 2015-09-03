@@ -18,6 +18,7 @@ class VideoHelper extends HtmlHelper
         'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images
         'youtube' => '//www.youtube.com', // Location of youtube player
         'vimeo' => '//player.vimeo.com/video',
+        'bbc' => '//www.bbc.co.uk',
         'dailymotion' => '//www.dailymotion.com',
         'wistia' => '//fast.wistia.net'
     );
@@ -40,6 +41,8 @@ class VideoHelper extends HtmlHelper
                 return $this->dailymotion($url, $settings);
             case 'wistia':
                 return $this->wistia($url, $settings);
+            case 'bbc':
+                return $this->bbc($url, $settings);
             case false:
             default:
                 return $this->_notFound(!empty($settings['failSilently']));
@@ -229,6 +232,45 @@ class VideoHelper extends HtmlHelper
     }
 
     /**
+     * Returns an embedded BBC video.
+     *
+     * @param string $url BBC URL
+     * @param array $settings Video player settings
+     * @return string
+     */
+    public function bbc($url, $settings = array())
+    {
+        $defaultSettings = array(
+            'width' => 500,
+            'height' => 400,
+            'allowfullscreen' => true,
+            'frameborder' => 0
+        );
+
+        $settings = array_merge($defaultSettings, $settings);
+
+        $videoId = $this->_getVideoId($url, 'bbc');
+
+        if (empty($videoId)) {
+            return $this->_notFound(!empty($settings['failSilently']));
+        }
+
+        $settings['src'] = $this->_apis['bbc'] . '/programmes/' . $videoId . '/player';
+
+        return $this->tag(
+            'iframe',
+            null,
+            array(
+                'src' => $settings['src'],
+                'width' => $settings['width'],
+                'height' => $settings['height'],
+                'frameborder' => $settings['frameborder'],
+                'allowfullscreen' => $settings['allowfullscreen']
+            )
+        ) . $this->tag('/iframe');
+    }
+
+    /**
      * Returns a Video ID
      *
      * @param string $url Video URL
@@ -251,6 +293,10 @@ class VideoHelper extends HtmlHelper
             case 'wistia':
                 $path = parse_url($url, PHP_URL_PATH);
                 preg_match('|^/medias/([0-9a-z]+)|i', $path, $matches);
+                return !empty($matches[1]) ? $matches[1] : null;
+            case 'bbc':
+                $path = parse_url($url, PHP_URL_PATH);
+                preg_match('|^/programmes/([0-9a-z]+)|i', $path, $matches);
                 return !empty($matches[1]) ? $matches[1] : null;
         }
     }
@@ -302,6 +348,8 @@ class VideoHelper extends HtmlHelper
             return 'dailymotion';
         } elseif (is_int(array_search('wistia', $host))) {
             return 'wistia';
+        } elseif (is_int(array_search('bbc', $host))) {
+            return 'bbc';
         } else {
             return false;
         }

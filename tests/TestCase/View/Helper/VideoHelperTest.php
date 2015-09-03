@@ -43,6 +43,10 @@ class VideoHelperTest extends TestCase
         // Test embedding a Wistia video.
         $expected = '<iframe src="//fast.wistia.net/embed/iframe/1voyrefhy9" width="480" height="270" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
         $this->assertEquals($expected, $this->Video->embed('https://numed.wistia.com/medias/1voyrefhy9'));
+
+        // Test embedding a Wistia video.
+        $expected = '<iframe src="//www.bbc.co.uk/programmes/p030z888/player" width="500" height="400" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
+        $this->assertEquals($expected, $this->Video->embed('http://www.bbc.co.uk/programmes/p030z888'));
     }
 
     public function testYouTubeThumbnail()
