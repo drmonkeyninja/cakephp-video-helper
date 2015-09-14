@@ -29,7 +29,7 @@ class VideoHelperTest extends TestCase
         $this->assertEquals($expected, $this->Video->embed('http://example.com', array('failSilently' => true)));
 
         // Test embedding a Youtube video.
-        $expected = '<iframe width="624" height="369" src="//www.youtube.com/embed/heNGFmEQVq0?hd=1&amp;rel=0&amp;autoplay=0" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
+        $expected = '<iframe width="624" height="369" src="//www.youtube.com/embed/heNGFmEQVq0?hd=1&amp;rel=0&amp;autoplay=0&amp;showinfo=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
         $this->assertEquals($expected, $this->Video->embed('https://www.youtube.com/watch?v=heNGFmEQVq0'));
 
         // Test embedding a Vimeo video.
