@@ -112,7 +112,8 @@ class VideoHelper extends HtmlHelper {
 			'allowfullscreen' => 1,
 			'autoplay' => 1,
 			'loop' => 1,
-			'frameborder' => 0
+			'frameborder' => 0,
+			'background' => 0
 		);
 		$settings = array_merge($defaultSettings, $settings);
 
@@ -122,7 +123,7 @@ class VideoHelper extends HtmlHelper {
 			return $this->_notFound(!empty($settings['failSilently']));
 		}
 
-		$settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'];
+		$settings['src'] = $this->_apis['vimeo'] . '/' . $videoId . '?title=' . $settings['show_title'] . '&amp;byline=' . $settings['show_byline'] . '&amp;portrait=' . $settings['show_portrait'] . '&amp;color=' . $settings['color'] . '&amp;autoplay=' . $settings['autoplay'] . '&amp;loop=' . $settings['loop'] . '&amp;background=' . $settings['background'];
 		return $this->tag('iframe', null, array(
 					'src' => $settings['src'],
 					'width' => $settings['width'],
