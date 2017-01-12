@@ -116,7 +116,13 @@ class VideoHelper extends HtmlHelper {
 			$settings['src'] .= '&playlist=' . $videoId;
 		}
 
-		$iframeAttributes['src'] = $settings['src'];
+		$iframeAttributes = array_merge($iframeAttributes, [
+			'width' => $settings['width'],
+			'height' => $settings['height'],
+			'src' => $settings['src'],
+			'frameborder' => $settings['frameborder'],
+			'allowfullscreen' => $settings['allowfullscreen']
+		]);
 
 		$youtubeEmbedString .= $this->tag('iframe', null, $iframeAttributes) . $this->tag('/iframe');
 
