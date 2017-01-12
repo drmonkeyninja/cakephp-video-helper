@@ -1,7 +1,7 @@
 VideoEmbed
 ==========
 
-[![License](https://poser.pugx.org/drmonkeyninja/cakephp-video-helper/license)](https://packagist.org/packages/drmonkeyninja/cakephp-video-helper) [![Build Status](https://api.travis-ci.org/drmonkeyninja/cakephp-video-helper.svg)](https://travis-ci.org/drmonkeyninja/cakephp-video-helper)
+[![License](https://poser.pugx.org/drmonkeyninja/cakephp-video-helper/license)](https://packagist.org/packages/drmonkeyninja/cakephp-video-helper) [![Build Status](https://travis-ci.org/drmonkeyninja/cakephp-video-helper.svg?branch=master)](https://travis-ci.org/drmonkeyninja/cakephp-video-helper)
 
 This plugin provides a Video helper that generates the tags for embedding videos from Youtube, Vimeo, Dailymotion, BBC player and Wistia.
 
