@@ -11,7 +11,7 @@ class VideoHelper extends HtmlHelper {
 
 	protected $_apis = array(
 		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images
-		'youtube' => '//www.youtube.com', // Location of youtube player
+		'youtube' => 'https://www.youtube.com', // Location of youtube player
 		'vimeo' => '//player.vimeo.com/video',
 		'dailymotion' => '//www.dailymotion.com',
 		'wistia' => '//fast.wistia.net'
@@ -72,7 +72,10 @@ class VideoHelper extends HtmlHelper {
 			'height' => 369,
 			'allowfullscreen' => 'true',
 			'frameborder' => 0,
-			'related' => 0
+			'related' => 0,
+			'autoplay' => 0,
+			'loop' => 0,
+			'enablejsapi' => 0
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -82,15 +85,42 @@ class VideoHelper extends HtmlHelper {
 			return $this->_notFound(!empty($settings['failSilently']));
 		}
 
-		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'];
+		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'] . '&autoplay=' . $settings['autoplay'];
 
-		return $this->tag('iframe', null, array(
-					'width' => $settings['width'],
-					'height' => $settings['height'],
-					'src' => $settings['src'],
-					'frameborder' => $settings['frameborder'],
-					'allowfullscreen' => $settings['allowfullscreen'])
-				) . $this->tag('/iframe');
+		$iframeAttributes = [];
+		$youtubeEmbedString = '';
+
+		if ($settings['enablejsapi']) {
+			//Throw exception if no id is passed as the iframe needs an id for the api to find the player
+			if (empty($settings['id'])) {
+				throw new Exception('iframe ID is missing. To use the iframe api the iframe will need an ID.');
+			}
+			$youtubeEmbedString .= $this->script(
+				'https://www.youtube.com/iframe_api'
+			);
+
+			$settings['src'] .= '&enablejsapi=1';
+
+			//Attach the origin to the src parameters. Used for security
+			if (!empty($settings['origin'])) {
+				$settings['src'] .= '&origin=' . $settings['origin'];
+			}
+
+			//Attach the id to the iframe
+			$iframeAttributes['id'] = $settings['id'];
+		}
+
+		if ($settings['loop']) {
+			//To loop, the loop parameter needs to be set and the playlist (which is just one video)
+			$settings['src'] .= '&loop=1';
+			$settings['src'] .= '&playlist=' . $videoId;
+		}
+
+		$iframeAttributes['src'] = $settings['src'];
+
+		$youtubeEmbedString .= $this->tag('iframe', null, $iframeAttributes) . $this->tag('/iframe');
+
+		return $youtubeEmbedString;
 	}
 
 /**
