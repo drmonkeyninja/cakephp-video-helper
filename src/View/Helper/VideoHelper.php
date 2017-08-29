@@ -331,6 +331,9 @@ class VideoHelper extends HtmlHelper
     protected function _getVideoSource($url)
     {
         $parsedUrl = parse_url($url);
+        if (empty($parsedUrl['host'])) {
+            return false;   
+        }
         $host = $parsedUrl['host'];
         if ($this->_isIp($host) === false) {
             if (!empty($host)) {
