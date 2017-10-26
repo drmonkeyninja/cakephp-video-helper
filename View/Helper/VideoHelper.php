@@ -375,7 +375,7 @@ class VideoHelper extends HtmlHelper {
  * @param array $settings (optional) parameters for the embedded video
  * @return string
  */
-	public function embedThumbnail($url, $size = 'thumb', $settings = array()) {
+	public function thumbnail($url, $size = 'thumb', $settings = array()) {
 		switch ($this->_getVideoSource($url)) {
 			case 'youtube':
 				return $this->youtubeThumbnail($url, $size, $settings);
