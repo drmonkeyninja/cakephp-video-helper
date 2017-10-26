@@ -12,7 +12,8 @@ class VideoHelper extends HtmlHelper {
 	protected $_apis = array(
 		'youtube_image' => '//i.ytimg.com/vi', // Location of youtube images
 		'youtube' => 'https://www.youtube.com', // Location of youtube player
-		'vimeo' => '//player.vimeo.com/video',
+		'vimeo' => '//player.vimeo.com/video', // Location of vimeo videos
+		'vimeo_info' => 'https://vimeo.com/api/v2/video/', //Location of vimeo info
 		'dailymotion' => '//www.dailymotion.com',
 		'wistia' => '//fast.wistia.net'
 	);
@@ -367,6 +368,26 @@ class VideoHelper extends HtmlHelper {
 	}
 
 /**
+ * Returns an video thumbnail url.
+ *
+ * @param string $url video URL
+ * @param string $size (optional) size of the thumbnail to get.
+ * @param array $settings (optional) parameters for the embedded video
+ * @return string
+ */
+	public function embedThumbnail($url, $size = 'thumb', $settings = array()) {
+		switch ($this->_getVideoSource($url)) {
+			case 'youtube':
+				return $this->youtubeThumbnail($url, $size, $settings);
+			case 'vimeo':
+				return $this->vimeoThumbnail($url, $size, $settings);
+			case false:
+			default:
+				return $this->_notFound(!empty($settings['failSilently']));
+		}
+	}
+
+/**
  * Returns a Youtube video image
  *
  * Available images:-
@@ -402,6 +423,49 @@ class VideoHelper extends HtmlHelper {
 		}
 
 		$imageUrl = $this->_apis['youtube_image'] . '/' . $videoId . '/' . $acceptedSizes[$size] . '.jpg';
+		return $this->image($imageUrl, $options);
+	}
+
+/**
+ * Returns a Vimeo video image
+ *
+ * Available images:-
+ *
+ * 		small - 100px x 75px (4:3)
+ * 		medium - 200px x 150px (4:3)
+ * 		large - 640px x 480px (4:3)
+ *
+ * @param string $url Vimeo video URL
+ * @param string $size (optional) thumbnail to be used
+ * @param array $options (optional) parameters for HtmlHelper::image()
+ * @return string
+ */
+	public function vimeoThumbnail($url, $size = 'thumb', $options = array()) {
+		$videoId = $this->_getVideoId($url);
+
+		$acceptedSizes = array(
+			'thumb' => 'medium',
+			'small' => 'small',
+			'medium' => 'medium',
+			'large' => 'large',
+		);
+
+		if (empty($acceptedSizes[$size]) === true) {
+			return;
+		}
+
+		try {
+			$videoInfo = @file_get_contents($this->_apis['vimeo_info'] . $videoId . '.php');
+			$videoInfo = unserialize($videoInfo);
+		} catch (Exception $e) {
+			$videoInfo = null;
+		}
+
+		if (empty($videoInfo) === true) {
+			return;
+		}
+
+		$imageUrl = $videoInfo[0]['thumbnail_' . $acceptedSizes[$size]];
 		return $this->image($imageUrl, $options);
 	}
 
