@@ -274,7 +274,7 @@ class VideoHelper extends HtmlHelper {
 		switch ($source) {
 			case 'youtube':
 				preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $url, $matches);
-				return (!emptyZ($matches[1]) ? $matches[1] : $url);
+				return (!empty($matches[1]) ? $matches[1] : $url);
 			case 'vimeo':
 				$path = parse_url($url, PHP_URL_PATH);
 				return substr($path, 1);
