@@ -317,8 +317,8 @@ class VideoHelper extends HtmlHelper {
 
 		if (is_int(array_search('vimeo', $host))) {
 			return 'vimeo';
-		} elseif (is_int(array_search('youtube', $host))) {
-			return 'youtu';
+		} elseif (is_int(array_search('youtu', $host))) {
+			return 'youtube';
 		} elseif (is_int(array_search('youtube', $host))) {
 			return 'youtube';
 		} elseif (is_int(array_search('dailymotion', $host))) {
