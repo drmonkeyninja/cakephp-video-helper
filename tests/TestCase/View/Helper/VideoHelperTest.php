@@ -63,4 +63,9 @@ class VideoHelperTest extends TestCase
         $expected = '';
         $this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'small'));
     }
+
+    public function testYouTubeThumbnailCanReturnLargeImage() {
+        $expected = '<img src="//i.ytimg.com/vi/heNGFmEQVq0/0.jpg" alt=""/>';
+        $this->assertEquals($expected, $this->Video->youtubeThumbnail('https://www.youtube.com/watch?v=heNGFmEQVq0', 'large'));
+    }
 }
