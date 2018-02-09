@@ -423,7 +423,7 @@ class VideoHelper extends HtmlHelper {
 			'maxres' => 'maxresdefault'
 		);
 
-		if (empty($acceptedSizes[$size]) === true) {
+		if (! isset($acceptedSizes[$size]) === true) {
 			return;
 		}
 
