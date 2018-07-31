@@ -76,7 +76,8 @@ class VideoHelper extends HtmlHelper {
 			'related' => 0,
 			'autoplay' => 0,
 			'loop' => 0,
-			'enablejsapi' => 0
+			'enablejsapi' => 0,
+			'showinfo' => 1,
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -87,6 +88,9 @@ class VideoHelper extends HtmlHelper {
 		}
 
 		$settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . $settings['hd'] . '&rel=' . $settings['related'] . '&autoplay=' . $settings['autoplay'];
+		if (empty($settings['showinfo'])) {
+			$settings['src'] .= '&showinfo=0';
+		}
 
 		$iframeAttributes = [];
 		$youtubeEmbedString = '';

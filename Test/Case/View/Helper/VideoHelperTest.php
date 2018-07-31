@@ -40,6 +40,11 @@ class VideoHelperTest extends CakeTestCase {
 		$this->assertEquals($expected, $this->Video->embed('https://numed.wistia.com/medias/1voyrefhy9'));
 	}
 
+	public function testCanDisableYoutubeInfo() {
+		$expected = '<iframe width="624" height="369" src="https://www.youtube.com/embed/heNGFmEQVq0?hd=1&amp;rel=0&amp;autoplay=0&amp;showinfo=0" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
+		$this->assertEquals($expected, $this->Video->embed('https://www.youtube.com/watch?v=heNGFmEQVq0', ['showinfo' => 0]));
+	}
+
 	public function testYouTubeThumbnail() {
 		// Test embedding Youtube thumbnail.
 		$expected = '<img src="//i.ytimg.com/vi/heNGFmEQVq0/default.jpg" alt=""/>';
