@@ -77,7 +77,8 @@ class VideoHelper extends HtmlHelper {
 			'autoplay' => 0,
 			'loop' => 0,
 			'enablejsapi' => 0,
-			'showinfo' => 1
+			'showinfo' => 1,
+			'class' => ''
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -154,7 +155,8 @@ class VideoHelper extends HtmlHelper {
 			'autoplay' => 1,
 			'loop' => 1,
 			'frameborder' => 0,
-			'background' => 0
+			'background' => 0,
+			'class' => ''
 		);
 		$settings = array_merge($defaultSettings, $settings);
 
@@ -189,7 +191,8 @@ class VideoHelper extends HtmlHelper {
 			'height' => 270,
 			'allowfullscreen' => 'true',
 			'frameborder' => 0,
-			'related' => 0
+			'related' => 0,
+			'class' => ''
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -207,7 +210,8 @@ class VideoHelper extends HtmlHelper {
 					'width' => $settings['width'],
 					'height' => $settings['height'],
 					'frameborder' => $settings['frameborder'],
-					'allowfullscreen' => $settings['allowfullscreen'])
+					'allowfullscreen' => $settings['allowfullscreen'],
+					'class' => $settings['class']),
 				) . $this->tag('/iframe');
 	}
 
@@ -226,7 +230,8 @@ class VideoHelper extends HtmlHelper {
 			'frameborder' => 0,
 			'autoplay' => false,
 			'controlsVisibleOnLoad' => true,
-			'loop' => false
+			'loop' => false,
+			'class' => ''
 		);
 
 		$settings = array_merge($defaultSettings, $settings);
@@ -261,7 +266,8 @@ class VideoHelper extends HtmlHelper {
 				'width' => $settings['width'],
 				'height' => $settings['height'],
 				'frameborder' => $settings['frameborder'],
-				'allowfullscreen' => $settings['allowfullscreen']
+				'allowfullscreen' => $settings['allowfullscreen'],
+				'class' => $settings['class']
 			)
 		) . $this->tag('/iframe');
 	}
