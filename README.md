@@ -47,7 +47,9 @@ Usage
     	'show_byline' => 1,
     	'show_portrait' => 0,
     	'autoplay' => 1,
-    	'frameborder' => 0
+    	'frameborder' => 0,
+        'class' => 'my-class'
     ));
 
 Some of these settings are applicable only to Vimeo if the video is on Youtube, Dailymotion or Wistia they are ignored.
+The `class` setting is applied to all iframes as a standard HTML class attribute.
