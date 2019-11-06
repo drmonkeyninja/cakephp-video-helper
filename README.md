@@ -26,6 +26,11 @@ Then add the following line to your bootstrap.php to load the plugin.
 
     CakePlugin::load('VideoEmbed');
 
+You will need to load the helper in one of your controllers before it can be used in the View templates. For example, in your `AppController`:
+
+    public $helpers = array('VideoEmbed.Video');
+
+For more information about enabling helpers check out the official [Helpers documentation](https://book.cakephp.org/2/en/views/helpers.html).
 
 Usage
 -----
