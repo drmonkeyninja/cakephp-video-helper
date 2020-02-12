@@ -1,0 +1,10 @@
+# Composer
+/composer.lock
+
+# CakePHP 3
+/vendor/*
+
+# Tool specific files #
+# JetBrains, aka PHPStorm, IntelliJ IDEA
+.phpstorm.meta.php/
+.idea/*
