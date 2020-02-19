@@ -86,6 +86,8 @@ class VideoHelper extends HtmlHelper
             'related' => false,
             'autoplay' => false,
             'showinfo' => true,
+            'mute' => false,
+            'enablejsapi' => false,
         ];
 
         $settings = array_merge($defaultSettings, $settings);
@@ -95,20 +97,26 @@ class VideoHelper extends HtmlHelper
             return $this->_notFound(!empty($settings['failSilently']));
         }
 
-        $settings['src'] = $this->_apis['youtube'] . '/embed/' . $videoId . '?hd=' . (int)$settings['hd'] . '&rel=' . (int)$settings['related'] . '&autoplay=' . (int)$settings['autoplay'] . '&showinfo=' . (int)$settings['showinfo'];
+        $settings['src'] = $this->_apis['youtube'] . '/embed/' .
+            $videoId . '?hd=' . (int)$settings['hd'] . '&rel=' . (int)$settings['related'] . '&autoplay=' . (int)$settings['autoplay'] .
+            '&showinfo=' . (int)$settings['showinfo'] . '&mute=' . (int)$settings['mute'] . '&enablejsapi=' . (int)$settings['enablejsapi'];
+        $iframeOptions = [
+            'width' => $settings['width'],
+            'height' => $settings['height'],
+            'src' => $settings['src'],
+            'frameborder' => (int)$settings['frameborder'],
+            'allowfullscreen' => $settings['allowfullscreen'],
+            'autoplay' => (int)$settings['autoplay'],
 
-        return $this->tag(
-            'iframe',
-            null,
-            [
-                'width' => $settings['width'],
-                'height' => $settings['height'],
-                'src' => $settings['src'],
-                'frameborder' => (int)$settings['frameborder'],
-                'allowfullscreen' => $settings['allowfullscreen'],
-                'autoplay' => (int)$settings['autoplay']
-            ]
-        ) . $this->tag('/iframe');
+        ];
+        if (!empty($settings['allow'])) {
+            $iframeOptions['allow'] = $settings['allow'];
+        }
+        if (!empty($settings['class'])) {
+            $iframeOptions['class'] = $settings['class'];
+        }
+
+        return $this->tag('iframe', null, $iframeOptions) . $this->tag('/iframe');
     }
 
     /**
